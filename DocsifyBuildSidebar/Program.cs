@@ -14,12 +14,17 @@ namespace DocsifyBuildSidebar
         private static string _sidebarFileName = "_sidebar.md";
         private static string _readmeFileName = "README.md";
         private static string _jsonConfigPath = "./Config/Config.json";
+        private static string _navbarFileName = "_navbar.md";
+        private static string _navbarConfigPath = "./Config/Navbar.md";
+
+        private static string navbarData = string.Empty;
 
         // 规则: 全名相等
         private static List<string> _ignoreFileList = new()
         {
             "_sidebar.md", // 侧边栏文件
-            "README.md" //侧边栏文件
+            "README.md", // 默认页文件
+            "_navbar.md"// 顶部栏文件
         };
 
         // 规则: 全名相等
@@ -171,14 +176,21 @@ namespace DocsifyBuildSidebar
         {
             var sidebarPath = Path.Combine(homePath, _sidebarFileName);
             var readmePath = Path.Combine(homePath, _readmeFileName);
+            var navbarPath = Path.Combine(homePath, _navbarFileName);
 
             File.WriteAllText(sidebarPath, data);
             File.WriteAllText(readmePath, data);
+            File.WriteAllText(navbarPath, navbarData);
         }
 
         private static void Init()
         {
             AnsiConsole.MarkupLine("[yellow]Start ReadConfig...[/]");
+
+            // 读取子目录默认 navbar 的内容
+            navbarData = File.ReadAllText(_navbarConfigPath);
+
+            Utils.WriteLogMessage("navbar data: \n" + navbarData);
 
             // 读取 Config.json
             var fileData = File.ReadAllText(_jsonConfigPath);
