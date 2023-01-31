@@ -151,7 +151,7 @@ namespace DocsifyBuildSidebar
                 var parentDir = new DirectoryInfo(item).Parent;
                 if (parentDir.FullName == _homePath)
                 {
-                    includeData = $"- [返回首页](/)\n" + includeData;
+                    includeData = $"- [返回首页](/README)\n" + includeData;
                 }
                 else
                 {
