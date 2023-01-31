@@ -1,7 +1,8 @@
 {
   "HomePath": "C:\\Users\\XS2020\\Desktop\\知识库\\knowledge",
   "IgnoreFile": [
-    "_coverpage.md"
+    "_coverpage.md",
+    "_footer.md"
   ],
   "IgnoreDir": [
     ".git"
