@@ -16,8 +16,10 @@ namespace DocsifyBuildSidebar
         private static string _jsonConfigPath = "./Config/Config.json";
         private static string _navbarFileName = "_navbar.md";
         private static string _navbarConfigPath = "./Config/Navbar.md";
+        private static string _homeReadmeFilePath = "./Config/homeReadme.md";
 
         private static string navbarData = string.Empty;
+        private static string homeReadmeData = string.Empty;
 
         // 规则: 全名相等
         private static List<string> _ignoreFileList = new()
@@ -179,6 +181,8 @@ namespace DocsifyBuildSidebar
             var navbarPath = Path.Combine(homePath, _navbarFileName);
 
             File.WriteAllText(sidebarPath, data);
+            // 如果是home目录，则在readme中拼接默认内容
+            if (homePath == _homePath) data = homeReadmeData + "\n" + data;
             File.WriteAllText(readmePath, data);
             File.WriteAllText(navbarPath, navbarData);
         }
@@ -187,10 +191,15 @@ namespace DocsifyBuildSidebar
         {
             AnsiConsole.MarkupLine("[yellow]Start ReadConfig...[/]");
 
-            // 读取子目录默认 navbar 的内容
+            // 读取默认 navbar 的内容
             navbarData = File.ReadAllText(_navbarConfigPath);
 
-            Utils.WriteLogMessage("navbar data: \n" + navbarData);
+            Utils.WriteLogMessage("navbar data:\n" + navbarData);
+
+            // 读取home目录默认 readme 的内容
+            homeReadmeData = File.ReadAllText(_homeReadmeFilePath);
+
+            Utils.WriteLogMessage("home readme data:\n" + homeReadmeData);
 
             // 读取 Config.json
             var fileData = File.ReadAllText(_jsonConfigPath);
